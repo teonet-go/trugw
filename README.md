@@ -46,7 +46,7 @@ go run ./cmd/trugw/client -n 5
 
 The `Tru echo peer` start Tru peer running at udp port 7070. It listening tru connection got messages and send answers it to sender.
 
-The `Trugw server` start listening Linux Socket connection, got messages from `Trugw client` and resend it to `Tru echo peer` by Tru connection. When `Trugw server` got answer from `Tru echo peer` it resend it back to `Trugw client` by linux socket.
+The `Trugw server` start listening Unix Socket connection, got messages from `Trugw client` and resend it to `Tru echo peer` by Tru connection. When `Trugw server` got answer from `Tru echo peer` it resend it back to `Trugw client` by unix socket.
 
 ## License
 

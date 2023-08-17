@@ -42,7 +42,7 @@ func main() {
 	}
 }
 
-// cleanup linux socket file
+// cleanup unix socket file
 func cleanup(sockAddr string) error {
 	if _, err := os.Stat(sockAddr); err == nil {
 		if err := os.RemoveAll(sockAddr); err != nil {
@@ -83,7 +83,7 @@ func process(conn net.Conn) {
 
 		if !*nomsg {
 			data := buf[:l]
-			log.Printf("got %d bytes from linux socket: %s\n",
+			log.Printf("got %d bytes from unix socket: %s\n",
 				len(data), string(data))
 		}
 

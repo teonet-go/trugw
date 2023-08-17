@@ -29,7 +29,7 @@ type Conn struct {
 // Dial connects to the address on the named network.
 func Dial(sockAddr, truAddr string) (net.Conn, error) {
 
-	// Create linux socket connection
+	// Create unix socket connection
 	conn, err := net.Dial("unix", sockAddr)
 	if err != nil {
 		return nil, err
@@ -121,7 +121,7 @@ func (c *Conn) Read(b []byte) (n int, err error) {
 	return
 }
 
-// reader receive TRU messages and send it to linux socket
+// reader receive TRU messages and send it to unix socket
 func (c Conn) reader(ch *tru.Channel, pac *tru.Packet, err error) (processed bool) {
 	if err != nil {
 		log.Printf("got tru err: %v\n", err)
