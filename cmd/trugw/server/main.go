@@ -65,6 +65,7 @@ func listen(sockAddr string) error {
 	}
 }
 
+// process reads incoming messages and automatically resend it tru peer
 func process(conn net.Conn) {
 	log.Printf("incoming connection accepted: %v\n", conn)
 

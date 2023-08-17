@@ -1,0 +1,32 @@
+#ifndef __TEOGW_H
+#define __TEOGW_H
+
+#include <stdint.h>
+#include <stdio.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#define recv_buf_len 256
+
+typedef struct {
+  int sock;
+  uint8_t recv_buf[recv_buf_len];
+  size_t recv_buf_ptr;
+} Tgw;
+
+Tgw *tgw_connect(const char *socket_path, const char *tru_addr);
+ssize_t tgw_send(Tgw *tgw, const void *buf, size_t n, int flags);
+ssize_t tgw_recv(Tgw *tgw, void *buf, size_t n, int flags);
+int tgw_close(Tgw *tgw);
+
+void uint32_to_byte_array(uint32_t value, uint8_t *raw);
+uint32_t byte_array_to_uint32(uint8_t *raw);
+void test_convert();
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* __TEOGW_H */
