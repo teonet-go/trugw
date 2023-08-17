@@ -39,7 +39,7 @@ go run ./cmd/trugw/server/
 ```shell
 # Trugw client
 cd ~/go/src/github.com/teonet-go/trugw
-go run ./cmd/trugw/client -n 100
+go run ./cmd/trugw/client -n 5
 ```
 
 ## How it works

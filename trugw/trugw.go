@@ -7,7 +7,7 @@
 package trugw
 
 import (
-	"fmt"
+	"log"
 	"net"
 
 	"github.com/teonet-go/tru"
@@ -27,18 +27,17 @@ type Conn struct {
 }
 
 // Dial connects to the address on the named network.
-func Dial(network, address string) (net.Conn, error) {
+func Dial(sockAddr, truAddr string) (net.Conn, error) {
 
 	// Create linux socket connection
-	addr := "/tmp/trugw"
-	conn, err := net.Dial("unix", addr)
+	conn, err := net.Dial("unix", sockAddr)
 	if err != nil {
 		return nil, err
 	}
 	conn = splitter.New(conn, false)
 
 	// Send tru address to server
-	conn.Write([]byte(address))
+	conn.Write([]byte(truAddr))
 
 	return conn, nil
 }
@@ -47,8 +46,7 @@ func Dial(network, address string) (net.Conn, error) {
 func Listen(network, address string) (net.Listener, error) {
 
 	// Start listening unix socket
-	addr := "/tmp/trugw"
-	listener, err := net.Listen("unix", addr)
+	listener, err := net.Listen("unix", address)
 	if err != nil {
 		return nil, err
 	}
@@ -93,8 +91,8 @@ func (c *Conn) Read(b []byte) (n int, err error) {
 		if err != nil {
 			return 0, err
 		}
-		address := string(b[:n])
-		fmt.Printf("got TRU address: %s\n", address)
+		truAddr := string(b[:n])
+		log.Printf("got tru address: %s\n", truAddr)
 
 		// Create tru object
 		tru, err := tru.New(0)
@@ -103,12 +101,12 @@ func (c *Conn) Read(b []byte) (n int, err error) {
 		}
 
 		// Create tru connection
-		ch, err := tru.Connect(address, c.reader)
+		ch, err := tru.Connect(truAddr, c.reader)
 		if err != nil {
 			return 0, err
 		}
 		c.ch = ch
-		fmt.Printf("connected to TRU peer: %s\n", ch.Addr().String())
+		log.Printf("connected to tru peer: %s\n", ch.Addr().String())
 	}
 
 	// Read message from unix socket, from client
@@ -126,10 +124,10 @@ func (c *Conn) Read(b []byte) (n int, err error) {
 // reader receive TRU messages and send it to linux socket
 func (c Conn) reader(ch *tru.Channel, pac *tru.Packet, err error) (processed bool) {
 	if err != nil {
-		fmt.Printf("got TRU err: %v\n", err)
+		log.Printf("got tru err: %v\n", err)
 		return
 	}
-	// fmt.Printf("got %d bytes from tru: %s\n", pac.Len(), pac.Data())
+	// log.Printf("got %d bytes from tru: %s\n", pac.Len(), pac.Data())
 
 	// Resend message to unix socket
 	c.Write(pac.Data())

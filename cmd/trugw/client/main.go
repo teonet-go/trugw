@@ -11,10 +11,15 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"os"
 	"sync"
 
 	"github.com/teonet-go/trugw/trugw"
+)
+
+const (
+	sockAddr = "/tmp/trugw.sock"
 )
 
 var addr = flag.String("a", ":7070", "tru peer address")
@@ -24,16 +29,19 @@ var nomsg = flag.Bool("nomsg", false, "don't show send receive messages")
 func main() {
 	fmt.Printf("Tru unix socket gateway client\n")
 	flag.Parse()
-	dial()
+
+	// log.SetOutput(io.Discard)
+
+	dial(sockAddr)
 }
 
-func dial() {
-	conn, err := trugw.Dial("tru", *addr)
+func dial(sockAddr string) {
+	conn, err := trugw.Dial(sockAddr, *addr)
 	if err != nil {
-		fmt.Printf("failed to dial: %v\n", err)
+		log.Printf("failed to dial: %v\n", err)
 		os.Exit(1)
 	}
-	fmt.Printf("start send %d messages ...\n", *numMessages)
+	log.Printf("connection established\n")
 
 	const bufSize = 256
 
@@ -46,36 +54,37 @@ func dial() {
 			data := make([]byte, bufSize)
 			n, err := conn.Read(data)
 			if err != nil {
-				// fmt.Println("read error: ", err)
+				// log.Println("read error: ", err)
 				// if err == io.EOF {
 				// 	break
 				// }
 				break
 			}
 			if !*nomsg {
-				fmt.Printf("read %v bytes: %s\n", n, data[:n])
+				log.Printf("read %v bytes: %s\n", n, data[:n])
 			}
 			wg.Done()
 		}
-		fmt.Printf("connection closed\n")
+		log.Printf("connection closed\n")
 		os.Exit(2)
 	}()
 
 	// Sender
+	log.Printf("start send %d messages ...\n", *numMessages)
 	for i := 1; i <= *numMessages; i++ {
 		data := []byte(fmt.Sprintf("Test message %d", i))
 		if n, err := conn.Write(data); err != nil {
-			fmt.Printf("write error: %v\n", err)
+			log.Printf("write error: %v\n", err)
 		} else {
 			if !*nomsg {
-				fmt.Printf("sent %v bytes: %s\n", n, data)
+				log.Printf("sent %v bytes: %s\n", n, data)
 			}
 		}
 	}
-	fmt.Printf("send all messages done\n")
+	log.Printf("send all messages done\n")
 
 	wg.Wait()
-	fmt.Printf("seceive all messages done\n")
+	log.Printf("seceive all messages done\n")
 	conn.Close()
 
 	select {}

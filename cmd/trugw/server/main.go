@@ -14,8 +14,13 @@ import (
 	"io"
 	"log"
 	"net"
+	"os"
 
 	"github.com/teonet-go/trugw/trugw"
+)
+
+const (
+	sockAddr = "/tmp/trugw.sock"
 )
 
 var nomsg = flag.Bool("nomsg", false, "don't show send receive messages")
@@ -24,15 +29,32 @@ func main() {
 	fmt.Printf("Tru unix socket gateway server\n")
 	flag.Parse()
 
-	err := listen()
+	// log.SetOutput(io.Discard)
+
+	err := cleanup(sockAddr)
 	if err != nil {
-		log.Println("can't start listening, error:", err)
+		log.Fatal("can't cleanup unix socket, error:", err)
+	}
+
+	err = listen(sockAddr)
+	if err != nil {
+		log.Fatal("can't start listening, error:", err)
 	}
 }
 
+// cleanup linux socket file
+func cleanup(sockAddr string) error {
+	if _, err := os.Stat(sockAddr); err == nil {
+		if err := os.RemoveAll(sockAddr); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 // listen connections
-func listen() error {
-	listener, err := trugw.Listen("tru", "")
+func listen(sockAddr string) error {
+	listener, err := trugw.Listen("tru", sockAddr)
 	if err != nil {
 		return err
 	}
@@ -52,7 +74,7 @@ func process(conn net.Conn) {
 	for {
 		l, err := conn.Read(buf)
 		if err != nil {
-			fmt.Printf("read error: %v\n", err)
+			log.Printf("read error: %v\n", err)
 			if err == io.EOF {
 				break
 			}
@@ -61,7 +83,7 @@ func process(conn net.Conn) {
 
 		if !*nomsg {
 			data := buf[:l]
-			fmt.Printf("got %d bytes from linux socket: %s\n",
+			log.Printf("got %d bytes from linux socket: %s\n",
 				len(data), string(data))
 		}
 
