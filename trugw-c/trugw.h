@@ -4,10 +4,6 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#ifdef _WIN32
-typedef unsigned __int64 ssize_t;
-#endif
-
 #define recv_buf_len 256
 
 typedef struct {
@@ -21,8 +17,8 @@ extern "C" {
 #endif
 
 Tgw *tgw_connect(const char *socket_path, const char *tru_addr);
-ssize_t tgw_send(Tgw *tgw, const char *buf, size_t n, int flags);
-ssize_t tgw_recv(Tgw *tgw, const char *buf, size_t n, int flags);
+size_t tgw_send(Tgw *tgw, const char *buf, size_t n, int flags);
+size_t tgw_recv(Tgw *tgw, const char *buf, size_t n, int flags);
 int tgw_close(Tgw *tgw);
 
 void uint32_to_byte_array(uint32_t value, uint8_t *raw);

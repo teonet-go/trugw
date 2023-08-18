@@ -91,7 +91,7 @@ int tgw_close(Tgw *tgw) {
 
 // tgw_send adds header to message and sends n bytes of buf to socket fd.
 // Returns the number of bytes sent or -1.
-ssize_t tgw_send(Tgw *tgw, const char *buf, size_t n, int flags) {
+size_t tgw_send(Tgw *tgw, const char *buf, size_t n, int flags) {
   // Send header
   uint8_t h[4];
   uint32_to_byte_array(n, h);
@@ -102,7 +102,7 @@ ssize_t tgw_send(Tgw *tgw, const char *buf, size_t n, int flags) {
 }
 
 // tgw_recv read n bytes into buf from socket fd.
-ssize_t tgw_recv(Tgw *tgw, const char *buf, size_t n, int flags) {
+size_t tgw_recv(Tgw *tgw, const char *buf, size_t n, int flags) {
   for (;;) {
     // Check message in buffer is valid
     if (tgw->recv_buf_ptr >= 4) {

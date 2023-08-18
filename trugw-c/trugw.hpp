@@ -20,15 +20,15 @@ public:
 
   bool connected() { return tgw != NULL; }
 
-  ssize_t send(const char *buf, size_t n, int flags) {
+  size_t send(const char *buf, size_t n, int flags) {
     return tgw_send(tgw, buf, n, flags);
   }
 
-  ssize_t send(std::string msg) {
+  size_t send(std::string msg) {
     return send(msg.c_str(), strlen(msg.c_str()), 0);
   }
 
-  ssize_t recv(const char *buf, size_t n, int flags) {
+  size_t recv(const char *buf, size_t n, int flags) {
     return tgw_recv(tgw, buf, n, flags);
   }
 
