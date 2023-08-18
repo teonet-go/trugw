@@ -27,7 +27,7 @@ int main()
         tgw.send(msg);
 
         uint8_t buf[1024];
-        auto n = (int)tgw.recv((const char*)buf, sizeof(buf), 0);
+        auto n = tgw.recv((const char*)buf, sizeof(buf), 0);
         std::string s((const char*)buf, n);
         std::cout << "receive " << s << std::endl;
     }
