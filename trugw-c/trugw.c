@@ -27,6 +27,16 @@ Tgw *tgw_connect(const char *socket_path, const char *tru_addr) {
   int sock = 0;
   int data_len = 0;
 
+#ifdef _WIN32
+  // Initialize Winsock
+  WSADATA WsaData = { 0 };
+  int Result = WSAStartup(MAKEWORD(2,2), &WsaData);
+  if (Result != 0) {
+      printf("WSAStartup failed with error: %d\n", Result);
+      return NULL;
+  }
+#endif
+
   // Create socket
   if ((sock = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
     printf("error on socket() call\n");
@@ -45,7 +55,7 @@ Tgw *tgw_connect(const char *socket_path, const char *tru_addr) {
   data_len = strlen(remote.sun_path) + sizeof(remote.sun_family);
   //
   if (connect(sock, (struct sockaddr *)&remote, data_len) == -1) {
-    printf("error on connect call\n");
+    printf("error on connect() call\n");
     return NULL;
   }
 
