@@ -3,7 +3,7 @@
 // license that can be found in the LICENSE file.
 
 // Golang net.Conn server sample application.
-// This sample application listen unix socket connections and use splitter 
+// This sample application listen unix socket connections and use splitter
 // package to split and(or) combine incpming messages.
 package main
 
