@@ -11,9 +11,13 @@ int main() {
   std::string tru_addr = ":7070";
 
   // Connect to teogw server
-  printf("trying to connect... \n");
+  std::cout << "trying to connect...\n";
   Teogw tgw(socket_path, tru_addr);
-  printf("connected \n");
+  if (!tgw.connected()) {
+    std::cout << "can't connect\n";
+    return 1;
+  }
+  std::cout << "connected \n";
 
   // Send messages
   for (int i = 0; i < 50000; i++) {
@@ -22,7 +26,7 @@ int main() {
     tgw.send(msg);
 
     uint8_t buf[1024];
-    int n = tgw.recv(buf, sizeof(buf), 0);
+    int n = tgw.recv((const char *)buf, sizeof(buf), 0);
     std::string s((const char *)buf, n);
     std::cout << "receive " << s << std::endl;
   }

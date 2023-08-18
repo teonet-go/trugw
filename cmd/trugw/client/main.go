@@ -19,7 +19,7 @@ import (
 )
 
 const (
-	sockAddr = "./tmp/trugw.sock"
+	sockAddr = "/tmp/trugw.sock"
 )
 
 var addr = flag.String("a", ":7070", "tru peer address")

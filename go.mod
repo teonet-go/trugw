@@ -1,6 +1,6 @@
 module github.com/teonet-go/trugw
 
-go 1.20
+go 1.21
 
 require (
 	github.com/go-errors/errors v1.4.2

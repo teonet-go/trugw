@@ -20,7 +20,7 @@ import (
 )
 
 const (
-	sockAddr = "./tmp/trugw.sock"
+	sockAddr = "/tmp/trugw.sock"
 )
 
 var nomsg = flag.Bool("nomsg", false, "don't show send receive messages")
