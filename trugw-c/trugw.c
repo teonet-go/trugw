@@ -9,8 +9,8 @@
 #include "trugw.h"
 
 #ifdef _WIN32
-#include <afunix.h>
 #include <winsock2.h>
+#include <afunix.h>
 
 #pragma comment(lib, "Ws2_32.lib")
 
@@ -66,6 +66,10 @@ Tgw *tgw_connect(const char *socket_path, const char *tru_addr) {
 
 // tgw_close closes teogw connection
 int tgw_close(Tgw *tgw) {
+  if (!tgw) {
+    return 0;
+  }
+  printf("sock: %d\n", tgw->sock);
 #ifdef _WIN32
   int rv = closesocket(tgw->sock);
 #else
