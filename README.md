@@ -22,7 +22,7 @@ git clone https://github.com/teonet-go/tru
 git clone https://github.com/teonet-go/trugw
 ```
 
-Run in separate consoles:
+Run on different consoles:
 
 ```shell
 # Tru echo peer
