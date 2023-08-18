@@ -11,7 +11,7 @@
 #include <sys/un.h>
 #include <unistd.h>
 
-#include "teogw.h"
+#include "trugw.h"
 
 // tgw_connect conects to teogw server using unix socket
 Tgw *tgw_connect(const char *socket_path, const char *tru_addr) {

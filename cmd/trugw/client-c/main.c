@@ -1,4 +1,8 @@
-#include "teogw.h"
+// Build and run this application:
+//  gcc main.c ../../../trugw-c/trugw.c -o client-c &&
+//  ./client-c
+
+#include "../../../trugw-c/trugw.h"
 #include <string.h>
 
 static const char *socket_path = "/tmp/trugw.sock";
