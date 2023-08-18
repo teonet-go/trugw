@@ -14,6 +14,10 @@ int main()
     // Connect to teogw server
     std::cout << "trying to connect...\n";
     Teogw tgw(socket_path, tru_addr);
+    if (!tgw.connected()) {
+        std::cout << "can't connect\n";
+        return 1;
+    }
     std::cout << "connected\n";
 
     // Send messages
@@ -23,7 +27,7 @@ int main()
         tgw.send(msg);
 
         uint8_t buf[1024];
-        int n = tgw.recv((const char*)buf, sizeof(buf), 0);
+        auto n = (int)tgw.recv((const char*)buf, sizeof(buf), 0);
         std::string s((const char*)buf, n);
         std::cout << "receive " << s << std::endl;
     }
