@@ -1,2 +1,4 @@
 cmd/trugw/client-cpp/client-cpp
 cmd/trugw/client-c/client-c
+tmp/trugw.sock
+cmd/trugw/client-vs/trugw/.vs/

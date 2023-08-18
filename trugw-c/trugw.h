@@ -4,21 +4,31 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#ifdef __cplusplus
-extern "C" {
+#ifndef _SSIZE_T_DEFINED
+#ifdef  _WIN64
+typedef unsigned __int64    ssize_t;
+#else
+typedef _W64 unsigned int   ssize_t;
+#endif
+#define _SSIZE_T_DEFINED
 #endif
 
 #define recv_buf_len 256
 
 typedef struct {
-  int sock;
-  uint8_t recv_buf[recv_buf_len];
-  size_t recv_buf_ptr;
+	int sock;
+	uint8_t recv_buf[recv_buf_len];
+	size_t recv_buf_ptr;
 } Tgw;
 
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 Tgw *tgw_connect(const char *socket_path, const char *tru_addr);
-ssize_t tgw_send(Tgw *tgw, const void *buf, size_t n, int flags);
-ssize_t tgw_recv(Tgw *tgw, void *buf, size_t n, int flags);
+ssize_t tgw_send(Tgw* tgw, const char* buf, size_t n, int flags);
+ssize_t tgw_recv(Tgw *tgw, const char*buf, size_t n, int flags);
 int tgw_close(Tgw *tgw);
 
 void uint32_to_byte_array(uint32_t value, uint8_t *raw);

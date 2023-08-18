@@ -1,7 +1,9 @@
 #pragma once
+
 #include "trugw.h"
 #include <cstring>
 #include <string>
+
 class Teogw {
 private:
   Tgw *tgw;
@@ -15,7 +17,7 @@ public:
       : Teogw(socket_path.c_str(), tru_addr.c_str()) {}
   ~Teogw() { close(); }
 
-  ssize_t send(const void *buf, size_t n, int flags) {
+  ssize_t send(const char *buf, size_t n, int flags) {
     return tgw_send(tgw, buf, n, flags);
   }
 
@@ -23,7 +25,7 @@ public:
     return send(msg.c_str(), strlen(msg.c_str()), 0);
   }
 
-  ssize_t recv(void *buf, size_t n, int flags) {
+  ssize_t recv(const char*buf, size_t n, int flags) {
     return tgw_recv(tgw, buf, n, flags);
   }
 
