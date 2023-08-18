@@ -1,6 +1,11 @@
 // Build and run this application:
+//  # In linux
 //  gcc main.cpp ../../../trugw-c/trugw.c -lstdc++  -o client-cpp &&
 //  ./client-cpp
+//
+//  # In Windows
+//  gcc main.cpp ../../../trugw-c/trugw.c -lstdc++ -lws2_32  -o client-cpp
+//
 
 #include "../../../trugw-c/trugw.hpp"
 #include <iostream>
