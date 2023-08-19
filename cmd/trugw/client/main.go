@@ -18,10 +18,7 @@ import (
 	"github.com/teonet-go/trugw/trugw"
 )
 
-const (
-	sockAddr = "/tmp/trugw.sock"
-)
-
+var sockAddr =  os.TempDir() + "/trugw.sock"
 var addr = flag.String("a", ":7070", "tru peer address")
 var numMessages = flag.Int("n", 10, "number of messages to send")
 var nomsg = flag.Bool("nomsg", false, "don't show send receive messages")

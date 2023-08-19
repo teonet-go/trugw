@@ -19,14 +19,11 @@ import (
 	"github.com/teonet-go/trugw/trugw"
 )
 
-const (
-	sockAddr = "/tmp/trugw.sock"
-)
-
+var sockAddr =  os.TempDir() + "/trugw.sock"
 var nomsg = flag.Bool("nomsg", false, "don't show send receive messages")
 
 func main() {
-	fmt.Printf("Tru unix socket gateway server\n")
+	fmt.Printf("Tru unix socket gateway server, sock path: %s\n", sockAddr)
 	flag.Parse()
 
 	// log.SetOutput(io.Discard)

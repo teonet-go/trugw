@@ -39,23 +39,21 @@ Tgw *tgw_connect(const char *socket_path, const char *tru_addr) {
 
   // Create socket
   if ((sock = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
-    printf("error on socket() call\n");
+    printf("error on socket() call, sock path: '%s'\n", socket_path);
     return NULL;
   }
 
   // Connect to unix server
   struct sockaddr_un remote;
   remote.sun_family = AF_UNIX;
-
 #ifdef _WIN32
   strcpy_s(remote.sun_path, sizeof(remote.sun_path), socket_path);
 #else
   strncpy(remote.sun_path, socket_path, sizeof(remote.sun_path));
 #endif
   data_len = strlen(remote.sun_path) + sizeof(remote.sun_family);
-  //
   if (connect(sock, (struct sockaddr *)&remote, data_len) == -1) {
-    printf("error on connect() call\n");
+    printf("error on connect() call, sock path: '%s'\n", socket_path);
     return NULL;
   }
 
