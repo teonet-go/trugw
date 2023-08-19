@@ -5,18 +5,18 @@
 #include <cstring>
 #include <string>
 
-class Teogw {
+class Trugw {
 private:
   Tgw *tgw;
 
 public:
   // Teogw constructor
-  Teogw(const char *socket_path, const char *tru_addr) {
+  Trugw(const char *socket_path, const char *tru_addr) {
     tgw = tgw_connect(socket_path, tru_addr);
   }
-  Teogw(std::string socket_path, std::string tru_addr)
-      : Teogw(socket_path.c_str(), tru_addr.c_str()) {}
-  ~Teogw() { close(); }
+  Trugw(std::string socket_path, std::string tru_addr)
+      : Trugw(socket_path.c_str(), tru_addr.c_str()) {}
+  ~Trugw() { close(); }
 
   bool connected() { return tgw != NULL; }
 

@@ -13,7 +13,7 @@ int main()
 
     // Connect to teogw server
     std::cout << "trying to connect...\n";
-    Teogw tgw(socket_path, tru_addr);
+    Trugw tgw(socket_path, tru_addr);
     if (!tgw.connected()) {
         std::cout << "can't connect\n";
         return 1;
