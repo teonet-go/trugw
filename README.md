@@ -13,7 +13,7 @@ The trugw contains two packages: trugw and splitter, and four examples in cmd fo
 
 To execute whall example install and run next applications:
 
-Instal Tru and this Trugw repo
+Install Tru and this Trugw repo
 
 ```shell
 mkdir -p ~/go/src/github.com/teonet-go
@@ -36,10 +36,28 @@ cd ~/go/src/github.com/teonet-go/trugw
 go run ./cmd/trugw/server/
 ```
 
+### Golang client
+
 ```shell
-# Trugw client
+# Trugw golang client
 cd ~/go/src/github.com/teonet-go/trugw
 go run ./cmd/trugw/client -n 5
+```
+
+### C, C+ clients
+
+```shell
+# Trugw C client
+cd ~/go/src/github.com/teonet-go/trugw/cmd/trugw/client-c
+gcc main.c ../../../trugw-c/trugw.c -o client-c
+./client-c
+```
+
+```shell
+# Trugw C++ client
+cd ~/go/src/github.com/teonet-go/trugw/cmd/trugw/client-cpp
+gcc main.cpp ../../../trugw-c/trugw.c -lstdc++  -o client-cpp
+./client-cpp
 ```
 
 ## How it works
