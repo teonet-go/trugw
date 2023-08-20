@@ -10,18 +10,21 @@
 #include "../../../trugw-c/trugw.hpp"
 #include <iostream>
 
-int main() {
+int main(int argc, char* argv[]) {
 
-  // Get tmp path
-  // size_t buf_count = 256;
-  // char tmp_path[256];
-  // getenv_s(&buf_count, tmp_path, "TEMP");
+  // Get unix socket path
   char *tmp_path = getenv("TEMP");
-
   std::string socket_path = std::string(tmp_path) + "\\trugw.sock";
-  std::string tru_addr = ":7070";
 
-  std::cout << "Trugw C++ client, sock path: " << socket_path << std::endl;
+  // Get tru peer address
+    std::string tru_addr = ":7070";
+    if (argc >= 2) {
+        tru_addr = std::string(argv[1]);
+    }
+
+  std::cout << "Trugw C++ client, "
+    << "sock path: " << socket_path
+    << "tru peer: " << socket_path << std::endl;
 
   // Connect to teogw server
   std::cout << "trying to connect...\n";
