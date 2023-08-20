@@ -10,21 +10,25 @@
 #include "../../../trugw-c/trugw.hpp"
 #include <iostream>
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
 
   // Get unix socket path
+#ifdef _WIN32
   char *tmp_path = getenv("TEMP");
   std::string socket_path = std::string(tmp_path) + "\\trugw.sock";
+#else
+  std::string socket_path = std::string("/tmp/trugw.sock");
+#endif
 
   // Get tru peer address
-    std::string tru_addr = ":7070";
-    if (argc >= 2) {
-        tru_addr = std::string(argv[1]);
-    }
+  std::string tru_addr = ":7070";
+  if (argc >= 2) {
+    tru_addr = std::string(argv[1]);
+  }
 
   std::cout << "Trugw C++ client, "
-    << "sock path: " << socket_path
-    << "tru peer: " << socket_path << std::endl;
+            << "sock path: " << socket_path << "tru peer: " << socket_path
+            << std::endl;
 
   // Connect to teogw server
   std::cout << "trying to connect...\n";
