@@ -1,8 +1,15 @@
+tmp/trugw.sock
+
 cmd/trugw/client-cpp/client-cpp
 cmd/trugw/client-cpp/client-cpp.exe
+
 cmd/trugw/client-c/client-c
 cmd/trugw/client-c/client-c.exe
-tmp/trugw.sock
+
 cmd/trugw/client-vs/trugw/.vs/
 cmd/trugw/client-vs/trugw/Debug
 cmd/trugw/client-vs/trugw/trugw/Debug/
+
+libtrugw.so
+cmd/trugw/server-dll/lib/libtrugw.h
+cmd/trugw/server-dll/cmd/run-so/trugw
